@@ -1,0 +1,7 @@
+{
+  "normalUser":"test@test.com",
+  "adminUser":"admin@test.com",
+  "wongUser":"potato@test.com",
+  "forAllPassword":"test123",
+  "wrongPassword":"potato"
+}
