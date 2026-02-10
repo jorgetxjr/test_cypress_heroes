@@ -16,6 +16,11 @@ class HomePage
             savesAccountGroup: '[data-cy="saves"]',
             hireHeroYesButton: '[class="undefined items-center py-2 px-4 text-sm font-medium text-center rounded-lg focus:ring-4 focus:outline-none text-white bg-red-600 hover:bg-red-700 focus:ring-red-300"]',
             waitTime:500,
+            editHeroButtonGroup:'[data-cy="pencil"]',
+            removeHeroButtonGroup:'[data-cy="trash"]',
+            deleteHeroYesButton:'[class="undefined items-center py-2 px-4 text-sm font-medium text-center rounded-lg focus:ring-4 focus:outline-none text-white bg-red-600 hover:bg-red-700 focus:ring-red-300"]',
+
+
 
         }
         return selectors
@@ -113,6 +118,22 @@ class HomePage
             })
 
     }
+
+    admCreateHero()
+    {
+        cy.get(this.selectorsList().newHeroButton).click()
+    }
+
+    admEditHero()
+    {
+        cy.get(this.selectorsList().editHeroButtonGroup).eq(7).click()
+    }
+
+    admDeleteHero()
+    {
+        cy.get(this.selectorsList().removeHeroButtonGroup).eq(7).click()
+        cy.get(this.selectorsList().deleteHeroYesButton).click()
+    }   
 
 }
 export default HomePage
