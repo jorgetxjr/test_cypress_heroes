@@ -35,7 +35,7 @@ jobs:
           npm run dev
       
       - name: Esperar aplicação subir
-        run: npx wait-on http://localhost:3000
+        run: npx wait-on http://localhost:3001
 
       - name: Instalar dependências dos testes
         run: npm install
