@@ -22,23 +22,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-
       - name: Instalar dependências da aplicação
         run: |
           cd app
           npm install
-          npm run setup
-
-      - name: Subir aplicação
-        run: |
-          cd app
-          npm run dev
-      
-      - name: Esperar aplicação subir
-        run: npx wait-on http://localhost:3001
 
       - name: Instalar dependências dos testes
         run: npm install
 
-      - name: Rodar testes Cypress
-        run: npx cypress run
+      - name: Rodar aplicação e testes
+        run: npx start-server-and-test "cd app && npm start" http://localhost:3000 "npx cypress run"
