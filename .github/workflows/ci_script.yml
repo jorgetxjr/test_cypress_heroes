@@ -1,28 +1,44 @@
-steps:
-  - uses: actions/checkout@v4
+name: Cypress CI
 
-  - name: Checkout app
-    uses: actions/checkout@v4
-    with:
-      repository: cypress-io/cypress-heroes
-      path: app
+on:
+  push:
+  pull_request:
 
-  - name: Install app deps
-    run: |
-      cd app
-      npm install
-      npm run setup
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
 
-  - name: Start app
-    run: |
-      cd app
-      npm run dev
+    steps:
+      - name: Checkout repositório de testes
+        uses: actions/checkout@v4
 
-  - name: Wait app
-    run: npx wait-on http://localhost:3000
+      - name: Checkout repositório da aplicação
+        uses: actions/checkout@v4
+        with:
+          repository: cypress-io/cypress-heroes
+          path: app
 
-  - name: Install test deps
-    run: npm install
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
-  - name: Run tests
-    run: npx cypress run
+      - name: Instalar dependências da aplicação
+        run: |
+          cd app
+          npm install
+          npm run setup
+
+      - name: Subir aplicação
+        run: |
+          cd app
+          npm run dev
+      
+      - name: Esperar aplicação subir
+        run: npx wait-on http://localhost:3000
+
+      - name: Instalar dependências dos testes
+        run: npm install
+
+      - name: Rodar testes Cypress
+        run: npx cypress run
