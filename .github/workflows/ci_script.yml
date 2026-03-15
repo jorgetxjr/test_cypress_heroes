@@ -1,34 +1,54 @@
-name: Cypress CI
+name: CI
+on: [push]
 
-on:
-  push:
-  pull_request:
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
 
-jobs:
-  e2e-tests:
+jobs: 
+  build-test: 
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repositório de testes
+      - name: Checkout Seu Repo de Testes
         uses: actions/checkout@v4
 
-      - name: Checkout repositório da aplicação
+      - name: Checkout Aplicação (Cypress-Heroes)
         uses: actions/checkout@v4
         with:
           repository: cypress-io/cypress-heroes
-          path: app
+          path: app-ui
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - name: Instalar dependências da aplicação
-        run: |
-          cd app
-          npm install
+          node-version: 22 # Versão estável recomendada para o RWA agora
 
-      - name: Instalar dependências dos testes
+      - name: Instalar e Buildar a Aplicação
+        run: |
+          cd app-ui
+          npm install
+          npm run setup
+
+      - name: Instalar Dependências de Teste (Raiz)
         run: npm install
 
-      - name: Rodar aplicação e testes
-        run: npx start-server-and-test "cd app && npm dev" http://localhost:3000 "npx cypress run"
+      - name: Rodar Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run dev
+          working-directory: app-ui
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 200
+          # O segredo: Aponta para o config na raiz e garante onde os outputs vão
+          project: ../
+          browser: chrome
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        if: always() # Garante que rode mesmo se o teste falhar
+        with: 
+          name: Cypress Results
+          # Usamos caminhos absolutos ou garantimos a raiz para evitar o warning de busca
+          path: |
+            ${{ github.workspace }}/cypress/screenshots
+            ${{ github.workspace }}/cypress/videos
+          if-no-files-found: warn
