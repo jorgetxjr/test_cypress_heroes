@@ -13,18 +13,24 @@ describe('Admin user',()=>{
 
     it('Creating new hero',()=>{
         homePage.admCreateHero()
-        const avatarPath = "C:/Users/Jorge/Downloads/jailson-mendes.jpg"
-        createHeroPage.createAHero("Jailson",10,25,42,4,avatarPath)
+        const avatarPath = 'cypress/images/jailson-mendes.jpg'
+        
+        const heroName = 'Jailson'
+        createHeroPage.createAHero(heroName,10,25,42,4,avatarPath)
+        homePage.isHeroCreated(heroName)
 
     })
 
     it('Editing a hero',()=>{
-        homePage.admEditHero()
-        createHeroPage.editName('Ursao Peludo')
+        const heroNumber = 0
+        const heroName = 'Fumacinha'
+        homePage.admEditHero(heroNumber)
+        createHeroPage.editName(heroName)
+        homePage.isHeroEdited(heroNumber,heroName)
         
     })
 
     it('Deleting a hero',()=>{
-        homePage.admDeleteHero()
+        homePage.admDeleteHero(5)
     })
 })

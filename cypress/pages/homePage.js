@@ -19,9 +19,7 @@ class HomePage
             editHeroButtonGroup:'[data-cy="pencil"]',
             removeHeroButtonGroup:'[data-cy="trash"]',
             deleteHeroYesButton:'[class="undefined items-center py-2 px-4 text-sm font-medium text-center rounded-lg focus:ring-4 focus:outline-none text-white bg-red-600 hover:bg-red-700 focus:ring-red-300"]',
-
-
-
+            nameInHomeGroup: '[data-cy="name"]',
         }
         return selectors
     }
@@ -124,16 +122,33 @@ class HomePage
         cy.get(this.selectorsList().newHeroButton).click()
     }
 
-    admEditHero()
+    isHeroCreated(heroName)
     {
-        cy.get(this.selectorsList().editHeroButtonGroup).eq(7).click()
+        cy.get(this.selectorsList().nameInHomeGroup).eq(7).contains(heroName)
     }
 
-    admDeleteHero()
+    admEditHero(heroNumber)
     {
-        cy.get(this.selectorsList().removeHeroButtonGroup).eq(7).click()
-        cy.get(this.selectorsList().deleteHeroYesButton).click()
-    }   
+        cy.get(this.selectorsList().editHeroButtonGroup).eq(heroNumber).click()
+    }
 
+    isHeroEdited(heroNumber, heroName)
+    {
+        cy.get(this.selectorsList().nameInHomeGroup).eq(heroNumber).contains(heroName)
+    }
+
+    admDeleteHero(heroNumber)
+    {
+        cy.get(this.selectorsList().nameInHomeGroup).eq(heroNumber).invoke('text').then((heroToErase)=>{
+            cy.get(this.selectorsList().nameInHomeGroup).then(($lista)=>{
+            const totalHeroes =$lista.length
+            cy.get(this.selectorsList().removeHeroButtonGroup).eq(heroNumber).click()
+            cy.get(this.selectorsList().deleteHeroYesButton).click()
+            cy.get(this.selectorsList().nameInHomeGroup).should('have.length',totalHeroes-1)
+            cy.contains(heroToErase).should('not.exist')
+            })
+        })
+        
+    }   
 }
 export default HomePage

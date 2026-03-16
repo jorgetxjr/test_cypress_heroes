@@ -39,3 +39,4 @@ videos
 
 package-lock.json
 .~*
+cypress\screenshots

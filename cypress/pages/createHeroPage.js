@@ -29,12 +29,15 @@ class CreateHeroPage
         cy.get(this.selectorsList().powersList).select(power)
         cy.get(this.selectorsList().avatarImage).selectFile(avatarFile)
         cy.get(this.selectorsList().submitButton).click()
+        
     }
 
     editName(newName)
     {
         cy.get(this.selectorsList().name).clear()
         cy.get(this.selectorsList().name).type(newName)
+        cy.get(this.selectorsList().submitButton).click()
+        //TODO: CHECAR SE O NOME FOI REALMENTE MODIFICADO
     }
 }
 export default CreateHeroPage

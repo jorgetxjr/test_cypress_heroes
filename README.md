@@ -25,7 +25,7 @@ npx cypress run
 ## :🇺🇸: English
 This is a test automation study project using Cypress and JavaScript. The content was developed based on classes from *LumeStack* - Guardião da Qualidade.
 
-For the execution of this scenario, it is first necessary to install the Real World App (RWA). It resembles a digital bank and is available at: [cypress-realworld-app](https://github.com/cypress-io/cypress-heroes). During the installation process, I encountered some issues that were described in the file "historico_testes_cypress_heroes".
+For the execution of this scenario, it is first necessary to install the Cypress Heroes. It simulates a card game and it is available in: [cypress-heroes](https://github.com/cypress-io/cypress-heroes). During the installation process, I encountered some issues that were described in the file "historico_testes_cypress_heroes".
 
 ## Installation
 After downloading and extracting the content, run the following command in a terminal — I recommend using **bash** — inside the project directory:
